@@ -31,6 +31,7 @@ export const postNewJob = async (req, res, next) => {
     try {
         //Create Job
         const job =req.body;
+        console.log(req.body)
         job.userId = req.user._id;
         const newJob = new Job(job)
         await newJob.save()
@@ -40,6 +41,7 @@ export const postNewJob = async (req, res, next) => {
             return next(createError(400, "Invalid data"));
         }
     } catch (error) {
+        console.log(error);
         next(error)
     }
 }

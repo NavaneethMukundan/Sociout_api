@@ -9,6 +9,7 @@ import Connection from '../pages/user/Connection'
 import Jobs from '../pages/user/Jobs'
 import { useDispatch, useSelector } from 'react-redux'
 import {fetchJobs} from '../redux/jobs/jobsActions'
+import { fetchSavedJobs } from '../redux/savedJobs/savedJobsActions'
 
 function User() {
     const dispatch = useDispatch()
@@ -19,6 +20,11 @@ function User() {
             dispatch(fetchJobs(user.token))
         }
     },[loading,user])
+    useEffect(()=>{
+        if(user){
+            dispatch(fetchSavedJobs(user.token))
+        }
+    },[user])
     return (
         <>
             <Routes>
@@ -31,6 +37,7 @@ function User() {
                     <Route path='/connections' element={<Connection page='friends'/>} />
                     <Route path='/connections/requests' element={<Connection page='requests'/>} />
                     <Route path='/jobs' element={<Jobs section='search'/>}/>
+                    <Route path='/jobs/saved' element={<Jobs section='save'/>}/>
                     <Route path='/post-job' element={<Jobs section='post'/>}/>
                     <Route path='/postedJobs' element={<Jobs section='posted'/>}/>
                 </Route>
